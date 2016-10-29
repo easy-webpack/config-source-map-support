@@ -1,11 +1,11 @@
-import {WebpackConfig, get} from '@easy-webpack/core'
+import {WebpackConfigWithMetadata, get} from '@easy-webpack/core'
 const webpack = require('webpack')
 
 /**
  * @param externals list packages that should be used as node modules, directly from node_modules (without bundling)
  */
 export = function sourceMapSupport({browser = true} = {}) {
-  return function sourceMapSupport(this: WebpackConfig): WebpackConfig {
+  return function sourceMapSupport(this: WebpackConfigWithMetadata): WebpackConfigWithMetadata {
     const config = {
       plugins: [
         new webpack.BannerPlugin({
@@ -13,7 +13,7 @@ export = function sourceMapSupport({browser = true} = {}) {
           raw: true, entryOnly: false
         })
       ].concat(get(this, 'plugins', []))
-    } as WebpackConfig
+    } as WebpackConfigWithMetadata
     if (!browser) {
       config.externals = [
         'source-map-support',
